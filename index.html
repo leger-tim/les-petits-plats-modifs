@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Les Petits Plats</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body>
+    <div class="image-container">
+      <img
+        src="assets/lampos-aritonang-24gR_9lCdes-unsplash1.jpg"
+        class="main-image"
+        alt="Background image of noodles"
+      />
+      <img
+        src="assets/Les-petits-plats.svg"
+        class="logo"
+        alt="Les Petits Plats logo"
+      />
+      <img
+        src="assets/Group-3.png"
+        class="group"
+        alt="Decorative group graphic"
+      />
+      <h1 class="title">
+        CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET
+        DÉLICIEUSES
+      </h1>
+      <div class="search-container">
+        <input
+          type="search"
+          id="searchBar"
+          placeholder="Rechercher une recette, un ingrédient, ..."
+        />
+        <div class="search-icon">
+          <img id="search-image" src="assets/Group-4.png" alt="Search icon" />
+        </div>
+      </div>
+    </div>
+    <div class="big-container">
+      <div id="dropdowns-container">
+        <div class="dropdown">
+          <button class="dropbtn">
+            Ingrédients
+            <img class="arrow" src="assets/Vector-1.svg" alt="Dropdown arrow" />
+          </button>
+          <div class="dropdown-content" data-dropdown="ingredients">
+            <input class="input-dropdowns" type="text" placeholder="" />
+            <!-- Ingredients will be populated here -->
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button class="dropbtn">
+            Appareils
+            <img class="arrow" src="assets/Vector-1.svg" alt="Dropdown arrow" />
+          </button>
+          <div class="dropdown-content" data-dropdown="appliances">
+            <input class="input-dropdowns" type="text" placeholder="" />
+            <svg
+              class="loupe-dropdown"
+              src="assets/Group-4-copy.svg"
+              alt="Search
+              icon for dropdown"
+              stroke="red"
+              fill="red"
+              background-color="red"
+            ></svg>
+
+            <!-- Appliances will be populated here -->
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button class="dropbtn">
+            Ustensiles
+            <img class="arrow" src="assets/Vector-1.svg" alt="Dropdown arrow" />
+          </button>
+          <div class="dropdown-content" data-dropdown="ustensils">
+            <input class="input-dropdowns" type="text" placeholder="" />
+            <!-- Utensils will be populated here -->
+          </div>
+        </div>
+      </div>
+      <div id="recipes-count"></div>
+    </div>
+
+    <div id="tags-container"></div>
+
+    <div class="content-container"></div>
+    <!-- <script src="js/fonctionnelle.js" defer></script> -->
+    <script src="js/imperative.js" defer></script>
+    <div class="message"></div>
+  </body>
+</html>
