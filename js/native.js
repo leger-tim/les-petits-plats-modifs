@@ -23,7 +23,6 @@ function fetchRecipes() {
 function setupEventListeners() {
   const searchBar = document.getElementById("searchBar");
   searchBar.addEventListener("input", function () {
-    // Appel conditionnel à la fonction de recherche en fonction du fichier
     chercherRecettesAvecBoucles(searchBar.value); // Pour imperative.js
   });
 
@@ -33,9 +32,10 @@ function setupEventListeners() {
     }
   });
 
-  document.querySelectorAll(".input-dropdowns").forEach((input) => {
-    input.addEventListener("keyup", filterDropdownItems); // Filtrer les items du dropdown lors de la saisie dans les inputs des dropdowns
-  });
+  const inputs = document.querySelectorAll(".input-dropdowns");
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("keyup", filterDropdownItems); // Filtrer les items du dropdown lors de la saisie dans les inputs des dropdowns
+  }
 }
 
 // Fonction pour générer les cartes des recettes
@@ -48,7 +48,8 @@ function generateCards(filteredRecipes) {
   }
 
   // Générer les cartes
-  filteredRecipes.forEach((recipe) => {
+  for (let i = 0; i < filteredRecipes.length; i++) {
+    const recipe = filteredRecipes[i];
     const card = document.createElement("div");
     card.className = "recette-card";
 
@@ -96,7 +97,8 @@ function generateCards(filteredRecipes) {
     const ingredientsList = document.createElement("ul");
     ingredientsList.className = "ingredients-list";
 
-    recipe.ingredients.forEach((ingredient) => {
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      const ingredient = recipe.ingredients[j];
       const listItem = document.createElement("li");
 
       const ingredientName = document.createElement("span");
@@ -118,7 +120,7 @@ function generateCards(filteredRecipes) {
       listItem.appendChild(quantity);
       listItem.appendChild(unit);
       ingredientsList.appendChild(listItem);
-    });
+    }
 
     ingredientsListContainer.appendChild(ingredientsList);
 
@@ -138,7 +140,7 @@ function generateCards(filteredRecipes) {
     card.appendChild(cardInner);
 
     container.appendChild(card);
-  });
+  }
 
   // Mettre à jour le nombre de recettes
   const recipesCountElement = document.getElementById("recipes-count");
@@ -153,17 +155,20 @@ function populateDropdowns(filteredRecipes) {
   const allUtensilsSet = new Set();
 
   // Collecter tous les éléments disponibles dans toutes les recettes
-  recipes.forEach((recipe) => {
-    recipe.ingredients.forEach((item) =>
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      const item = recipe.ingredients[j];
       allIngredientsSet.add(
         capitalizeFirstLetter(item.ingredient.toLowerCase())
-      )
-    );
+      );
+    }
     allAppliancesSet.add(capitalizeFirstLetter(recipe.appliance.toLowerCase()));
-    recipe.ustensils.forEach((item) =>
-      allUtensilsSet.add(capitalizeFirstLetter(item.toLowerCase()))
-    );
-  });
+    for (let k = 0; k < recipe.ustensils.length; k++) {
+      const item = recipe.ustensils[k];
+      allUtensilsSet.add(capitalizeFirstLetter(item.toLowerCase()));
+    }
+  }
 
   let ingredientsSet = new Set();
   let appliancesSet = new Set();
@@ -172,15 +177,20 @@ function populateDropdowns(filteredRecipes) {
   // Si un filtre est appliqué (le nombre de recettes filtrées est inférieur au nombre total de recettes)
   if (filteredRecipes.length < recipes.length) {
     // Collecter uniquement les éléments correspondant aux recettes filtrées
-    filteredRecipes.forEach((recipe) => {
-      recipe.ingredients.forEach((item) =>
-        ingredientsSet.add(capitalizeFirstLetter(item.ingredient.toLowerCase()))
-      );
+    for (let i = 0; i < filteredRecipes.length; i++) {
+      const recipe = filteredRecipes[i];
+      for (let j = 0; j < recipe.ingredients.length; j++) {
+        const item = recipe.ingredients[j];
+        ingredientsSet.add(
+          capitalizeFirstLetter(item.ingredient.toLowerCase())
+        );
+      }
       appliancesSet.add(capitalizeFirstLetter(recipe.appliance.toLowerCase()));
-      recipe.ustensils.forEach((item) =>
-        utensilsSet.add(capitalizeFirstLetter(item.toLowerCase()))
-      );
-    });
+      for (let k = 0; k < recipe.ustensils.length; k++) {
+        const item = recipe.ustensils[k];
+        utensilsSet.add(capitalizeFirstLetter(item.toLowerCase()));
+      }
+    }
   } else {
     // Si aucun filtre n'est appliqué, montrer tous les éléments
     ingredientsSet = allIngredientsSet;
@@ -208,9 +218,12 @@ function addItemsToDropdown(selector, items) {
   const dropdown = document.querySelector(selector);
   const existingItems = dropdown.querySelectorAll(".dropdown-item");
 
-  existingItems.forEach((item) => item.remove()); // Supprimer les anciens items avant d'ajouter les nouveaux
+  for (let i = 0; i < existingItems.length; i++) {
+    existingItems[i].remove(); // Supprimer les anciens items avant d'ajouter les nouveaux
+  }
 
-  items.forEach((item) => {
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
     const element = document.createElement("button");
     element.type = "button";
     element.className = "dropdown-item";
@@ -221,7 +234,7 @@ function addItemsToDropdown(selector, items) {
       filterRecipesByTags(); // Filtrer les recettes en fonction des tags actifs
     });
     dropdown.appendChild(element); // Ajouter l'élément au dropdown
-  });
+  }
 }
 
 function chercherRecettesAvecBoucles(champRecherche) {
@@ -281,9 +294,9 @@ function chercherRecettesAvecBoucles(champRecherche) {
 // Fonction pour fermer tous les dropdowns
 function closeAllDropdowns() {
   const dropdownContents = document.querySelectorAll(".dropdown-content");
-  dropdownContents.forEach((dropdown) => {
-    dropdown.classList.remove("show");
-  });
+  for (let i = 0; i < dropdownContents.length; i++) {
+    dropdownContents[i].classList.remove("show");
+  }
 }
 
 // Fonction pour filtrer les items dans les dropdowns en fonction de la saisie
@@ -293,14 +306,14 @@ function filterDropdownItems(event) {
   const dropdown = input.closest(".dropdown-content");
   const items = dropdown.querySelectorAll(".dropdown-item");
 
-  items.forEach((item) => {
-    const text = item.textContent.toLowerCase();
+  for (let i = 0; i < items.length; i++) {
+    const text = items[i].textContent.toLowerCase();
     if (text.includes(filter)) {
-      item.style.display = ""; // Afficher l'item s'il correspond à la recherche
+      items[i].style.display = ""; // Afficher l'item s'il correspond à la recherche
     } else {
-      item.style.display = "none"; // Masquer l'item sinon
+      items[i].style.display = "none"; // Masquer l'item sinon
     }
-  });
+  }
 }
 
 // Fonction pour filtrer les recettes en fonction des tags actifs
